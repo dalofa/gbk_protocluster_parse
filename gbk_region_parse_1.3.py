@@ -2,7 +2,7 @@
 """
 Created on Fri Nov 11 14:41:29 2022
 
-@author: dalofa
+@author: David Faurdal
 
 A script for generating a csv table of protocluster predicted by antiSMASH.
 The script takes a genbank-file annotated by antiSMASH and outputs a csv-table
@@ -27,7 +27,7 @@ from Bio.Seq import Seq
 import pandas as pd
 
 
-#ollect all protoclysters from antiSMASH annotations
+#Collect all protoclysters from antiSMASH annotations
 all_region=[]
 
 contig_n =1
@@ -35,8 +35,6 @@ genbank = SeqIO.parse(file_path,format = "genbank")
 for record in genbank:
     record.features = [f for f in record.features if f.type == "protocluster"]
     
-
-    #rewrite to fix
     for feature in record.features:
         if feature.qualifiers["tool"]==['antismash']:
             c_num = "Protocluster number " + str(contig_n)+ "." +  str(feature.qualifiers["protocluster_number"])[2:-1]
@@ -46,7 +44,6 @@ for record in genbank:
             r_contig = record.id
             r_info=[c_num, r_product, r_st, r_end, r_contig]
             all_region.append(r_info)
-
     contig_n+=1
 
 gbk_df = pd.DataFrame(all_region,columns=["protocluster","product","gbk_start","gbk_end","contig name"])       
