@@ -71,8 +71,9 @@ for region in all_regions:
     for proto in all_protoclusters:
         c_start = proto[2]
         c_stop = proto[2]
+        c_contig=proto[4]
         
-        if c_start >= r_start and c_stop <= r_stop:
+        if c_start >= r_start and c_stop <= r_stop and r_contig==c_contig:
             new_row = proto
             new_row.append(r_num)
             new_row.append(r_product)
